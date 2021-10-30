@@ -1,0 +1,235 @@
+﻿@model PagedList.IPagedList<PHONEBOOK.Models.Customer>
+
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+
+    .body-content {
+        margin-top: -50px;
+    }
+
+    .grid-container {
+        background-color: bisque;
+        box-shadow: 3px 3px lightgray;
+        border-radius: 3px;
+    }
+
+    h2 {
+        font-family: Georgia, Times, 'Times New Roman', serif;
+        text-align: center;
+        padding-top:10px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    a:hover {
+        text-decoration:none;
+    }
+
+    .btn-info > a {
+        color:#fff;
+        text-decoration:none;
+        border-radius:3px;
+    }
+
+    .btn-info {
+        display: flex;
+        float: right;
+        margin: 8px;
+        background-color: #337ab7;
+    }
+
+        .btn-info:hover {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+    tbody > tr > td > span >a {
+        color:#fff !important;
+    }
+
+    .table-hover > tbody > tr:hover {
+        background-color: #fedcb4;
+    }
+
+    .pagination > li:first-child > a {
+        margin-left:8px;
+    }
+
+    #searchOptions {
+        margin: 0 auto;
+        display: block;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        margin: auto;
+        padding:10px;
+        background-color:bisque;
+    }
+
+</style>
+
+<div class="grid-container">
+    <h2>PHONE BOOK</h2>
+
+    <button class="btn btn-primary" id="searchOptions">Search Customer By</button>
+
+    @if (!(Model.PageCount < Model.PageNumber))
+    {
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                @using (@Html.BeginForm("Index", "Customers", FormMethod.Get))
+                {
+                    <span class="close">&times;</span>
+                    @Html.TextBox("searchLastName", null, new { @class = "form-control", placeholder = "Search Last Name", type = "search" })
+                    @Html.TextBox("searchFirstName", null, new { @class = "form-control", placeholder = "Search First Name", type = "search" })
+                    @Html.TextBox("searchEmail", null, new { @class = "form-control", placeholder = "Search Email", type = "search" })
+                    @Html.TextBox("searchPhoneNumber", null, new { @class = "form-control", placeholder = "Search Phone Number", type = "search" })
+                    @Html.TextBox("searchMobileNumber", null, new { @class = "form-control", placeholder = "Search Mobile Number", type = "search" })
+                    @Html.TextBox("searchPostCode", null, new { @class = "form-control", placeholder = "Search Post Code", type = "search" })
+                    @Html.TextBox("searchRegion", null, new { @class = "form-control", placeholder = "Search Region", type = "search" })
+
+                    <input type="hidden" name="sortOrder" value=@ViewBag.CurrentSortOrder />
+
+                    <input class="btn btn-primary" type="submit" value="Search Customer" />
+
+                    <input id="ResetButton" class="btn btn-danger" type="button" value="Clear All" />
+                }
+            </div>
+        </div>
+        <button class="btn btn-info">@Html.ActionLink("Add Customer", "Create")</button>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Last Name", "Index", "Customers", new { sortOrder = ViewBag.LNSO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        @Html.ActionLink("First Name", "Index", "Customers", new { sortOrder = ViewBag.FNSO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Email", "Index", "Customers", new { sortOrder = ViewBag.EMSO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Phone Number", "Index", "Customers", new { sortOrder = ViewBag.PHSO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Mobile Number", "Index", "Customers", new { sortOrder = ViewBag.MNSO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Post Code", "Index", "Locations", new { sortOrder = ViewBag.PCSO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Region", "Index", "Locations", new { sortOrder = ViewBag.RESO, searchLastName = ViewBag.CurrentLastName, searchFirstName = ViewBag.CurrentFirstName, searchEmail = ViewBag.CurrentEmail, searchPhoneNumber = ViewBag.CurrentPhoneNumber, searchMobileNumber = ViewBag.CurrentMobileNumber, searchPostCode = ViewBag.CurrentPostCode, searchRegion = ViewBag.CurrentRegion }, null)
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => customer.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => customer.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => customer.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => customer.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => customer.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => customer.PostCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => customer.Region)
+                        </td>
+                        <td>
+                            <span class="btn btn-success">@Html.ActionLink("Edit", "Edit", new { id = customer.CustomerID })</span>  |
+                            <span class="btn btn-warning">@Html.ActionLink("Details", "Details", new { id = customer.CustomerID })</span>  |
+                            <span class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { id = customer.CustomerID })</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <i>Page</i> @Model.PageNumber <i>of</i> @Model.PageCount
+        @Html.PagedListPager(Model, x => Url.Action("Index", "Customers", new { page = x }))
+    }
+    else
+    {
+        <h1>NO DATA FOUND</h1>
+        <div>
+            <span class="btn btn-info">@Html.ActionLink("Back to List", "Index")</span>
+        </div>
+    }
+</div>
+
+@section MyCustomJavascript{
+    <script>
+        $("#ResetButton").click(function (e) {
+            $("#searchLastName").val("");
+            $("#searchFirstName").val("");
+            $("#searchEmail").val("");
+            $("#searchPhoneNumber").val("");
+            $("#searchMobileNumber").val("");
+            $("#searchPostCode").val("");
+            $("#searchRegion").val("");
+        })
+    </script>
+}
+
+@section MyModalScripts{
+    <script>
+        var modal = document.getElementById("myModal");
+
+        var btn = document.getElementById("searchOptions");
+
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+            modal.style.display = "flex";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>    
+}
+

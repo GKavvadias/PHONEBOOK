@@ -1,0 +1,152 @@
+﻿@model PHONEBOOK.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+
+    .body-content {
+        margin-top: -50px;
+    }
+
+    .grid-container {
+        background-color: bisque;
+        box-shadow: 3px 3px lightgray;
+        border-radius: 3px;
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    h2, h4 {
+        font-family: Georgia, Times, 'Times New Roman', serif;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .btn-info > a {
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    .btn-info {
+        display: flex;
+        float: left;
+        margin-left: 8px;
+        background-color: #337ab7;
+    }
+
+        .btn-info:hover {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+    .form-horizontal {
+        display: grid;
+        justify-content: center;
+        margin-right: -50px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        display: contents;
+        justify-content: center;
+    }
+
+    .control-label {
+        text-align: center;
+    }
+
+    a {
+        color: #fff;
+    }
+
+    a:hover {
+        color: #fff !important;
+    }
+
+    .btn-success {
+        margin-left: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .dl-horizontal {
+        display: block;
+    }
+
+</style>
+
+<div class="grid-container">
+    <h2>Details</h2>
+    <h4>Customer</h4>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MobileNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MobileNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PostCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PostCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Region)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Region)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        <span class="btn btn-success">@Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID })</span>
+        <span class="btn btn-info">@Html.ActionLink("Back to List", "Index")</span>
+    </p>
+</div>
